@@ -5,5 +5,5 @@ public interface MemberRepository {
     void save( Member member );
 
     // 아이디로 찾기
-    Member fidById( Long memberId );
+    Member findById( Long memberId );
 }
