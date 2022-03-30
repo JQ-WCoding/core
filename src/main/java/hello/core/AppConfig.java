@@ -24,22 +24,26 @@ public class AppConfig {
     // DIP, SRP 원칙을 준수하여 구현된 ServiceImpl 내에서는 외부에서의 변경에 전혀 신경쓰지 않고 작업이 가능하도록 한다
 
     // 생성자 주입
+    // memberService로 MemberServiceImpl@x01 빈객체가 생성
     @Bean
     public MemberService memberService() {
         return new MemberServiceImpl( getMemberRepository() );
     }
 
     // 더 상세하게 나누어 생성자의 중복코드를 제거하고 메소드만 가지고 계속해서 변경할 수 있도록 한다.
+    // memberRepository로 MemoryMemberRepositry@x03 빈객체가 생성
     @Bean
     public MemberRepository getMemberRepository() {
         return new MemoryMemberRepository();
     }
 
+    // orderServiceImpl로 OrderServiceImpl@x02 빈객체가 생성
     @Bean
     public OrderService orderService() {
         return new OrderServiceImpl( getMemberRepository(), getDiscountPolicy() );
     }
 
+    // discountPolicy로 RateDiscountPolicy@x04 빈객체가 생성
     @Bean
     public DiscountPolicy getDiscountPolicy() {
 //        return new FixDiscountPolicy();
