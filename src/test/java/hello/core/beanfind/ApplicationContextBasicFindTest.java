@@ -13,6 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ApplicationContextBasicFindTest {
+    // ApplicationContext를 주로 사용한다
+    // BeanFactory는 잘 사용하지 않는다
     AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext( AppConfig.class );
 
     @Test
