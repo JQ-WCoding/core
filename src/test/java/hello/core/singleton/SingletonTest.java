@@ -19,6 +19,8 @@ public class SingletonTest {
         MemberService memberService2 = appConfig.memberService();
 
         // 참조값이 다른 것을 확인 -> 계속해서 객체를 생성하는 것은 비효율적이다
+        // 두개의 객체는 서로 다른 주소를 가진 다른 객체이다.
+        // 호출이 될때마다 계속 생성하는 것은 비효율적이며 또한, 값이 전혀 다른 것을 조회해올 수 있기 때문에 단일성을 유지할 필요가 있다면 싱글톤 패턴을 사용한다
         System.out.println( "memberService1 = " + memberService1 );
         System.out.println( "memberService1 = " + memberService2 );
 
