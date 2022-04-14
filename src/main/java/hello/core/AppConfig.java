@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 // 설정 정보
 // @Bean 이 스프링 컨테이너에 등록된다
+// @Configuration이 없으면 Singleton을 보장받지 못하여 인스턴스를 계속해서 생성한다.
 @Configuration
 public class AppConfig {
 
@@ -25,28 +26,47 @@ public class AppConfig {
 
     // 생성자 주입
     // memberService로 MemberServiceImpl@x01 빈객체가 생성
+
+    // @Bean memberService -> new MemoryMemberRepository()
+    // @Bean orderService -> new RateDiscountPolicy()
+
+    // call AppConfig.memberService
+    // call AppConfig.memberRepository
+    // call AppConfig.memberRepository
+    // call AppConfig.orderService
+    // call AppConfig.memberRepository
+    // 호출 순서는 보장되지 않지만 결론적으로 5가지 모두 호출될 것이라 추정 -> 하지만 3가지만 호출된다
+
+    // call AppConfig.orderService
+    // call AppConfig.memberRepository
+    // call AppConfig.memberService
+
+    // 결과
     @Bean
     public MemberService memberService() {
-        return new MemberServiceImpl( getMemberRepository() );
+        System.out.println( "call AppConfig.memberService" );
+        return new MemberServiceImpl( memberRepository() );
     }
 
     // 더 상세하게 나누어 생성자의 중복코드를 제거하고 메소드만 가지고 계속해서 변경할 수 있도록 한다.
     // memberRepository로 MemoryMemberRepositry@x03 빈객체가 생성
     @Bean
-    public MemberRepository getMemberRepository() {
+    public MemberRepository memberRepository() {
+        System.out.println( "call AppConfig.memberRepository" );
         return new MemoryMemberRepository();
     }
 
     // orderServiceImpl로 OrderServiceImpl@x02 빈객체가 생성
     @Bean
     public OrderService orderService() {
-        return new OrderServiceImpl( getMemberRepository(), getDiscountPolicy() );
+        System.out.println( "call AppConfig.orderService" );
+        return new OrderServiceImpl( memberRepository(), discountPolicy() );
     }
 
     // discountPolicy로 RateDiscountPolicy@x04 빈객체가 생성
     @Bean
-    public DiscountPolicy getDiscountPolicy() {
-//        return new FixDiscountPolicy();
+    public DiscountPolicy discountPolicy() {
+        //        return new FixDiscountPolicy();
         // 단순 할인정책만 바꾸기 위해서 생성자만 변경해주면 된다
         return new RateDiscountPolicy();
     }
