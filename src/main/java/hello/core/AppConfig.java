@@ -41,6 +41,8 @@ public class AppConfig {
     // call AppConfig.memberRepository
     // call AppConfig.memberService
 
+    // Configuration 이 꼭 필요함
+
     // 결과
     @Bean
     public MemberService memberService() {
