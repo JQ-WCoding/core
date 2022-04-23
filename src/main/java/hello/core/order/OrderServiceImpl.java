@@ -3,7 +3,10 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
     /* 프로세스 -> 주문을 내리기 위해서는 해당 회원의 등급을 확인하고, 등급에 맞는 회원의 할인정책을 적용한 주문내역을 내린다 */
@@ -15,13 +18,14 @@ public class OrderServiceImpl implements OrderService {
     // DIP는 지켰다 -> 의존성 주입에 대한건 지켰음
     private final DiscountPolicy discountPolicy;
 
-    public OrderServiceImpl( MemberRepository memberRepository, DiscountPolicy discountPolicy ) {
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
 
     @Override
-    public Order createOrder( Long memberId, String itemName, int itemPrice ) {
+    public Order createOrder(Long memberId, String itemName, int itemPrice) {
         // 멤버를 저장소에서 ID값으로 찾아 할인정책을 확인하고 새로운 주문을 생성한다.
         Member member = memberRepository.findById( memberId );
         int discountPrice = discountPolicy.discount( member, itemPrice );

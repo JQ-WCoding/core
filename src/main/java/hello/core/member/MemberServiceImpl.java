@@ -1,5 +1,9 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberServiceImpl implements MemberService {
 
     // 추후 @Autowired를 통해 생성자와 함께 Depency를 주입할 예정
@@ -10,17 +14,18 @@ public class MemberServiceImpl implements MemberService {
     // 멤버 서비스는 MemoryMemberRepositry에서 부터 구현되어 있는 메소드들을 사용한다
     private final MemberRepository memberRepository;
 
-    public MemberServiceImpl( MemberRepository memberRepository ) {
+    @Autowired
+    public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
     @Override
-    public void join( Member member ) {
+    public void join(Member member) {
         memberRepository.save( member );
     }
 
     @Override
-    public Member findMember( Long memberId ) {
+    public Member findMember(Long memberId) {
         return memberRepository.findById( memberId );
     }
 
