@@ -18,9 +18,8 @@ public class ComponentFilterAppConfigTest {
     public void filterScan() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext( ComponentFilterAppConfig.class );
         BeanA beanA = ac.getBean( "beanA", BeanA.class );
-
         assertThat( beanA ).isNotNull();
-        ac.getBean( "beanB", BeanB.class );
+
         assertThrows( NoSuchBeanDefinitionException.class, () -> ac.getBean( "beanB", BeanB.class ) );
     }
 
