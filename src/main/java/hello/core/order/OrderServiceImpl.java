@@ -18,6 +18,10 @@ public class OrderServiceImpl implements OrderService {
     // DIP는 지켰다 -> 의존성 주입에 대한건 지켰음
     private DiscountPolicy discountPolicy;
 
+    public OrderServiceImpl() {
+
+    }
+
     // Setter를 사용해 가변적인 주입도 가능하다.
     // Spring bean에 등록되어 있지 않은 객체도 선택적으로 등록가능하다
     @Autowired
