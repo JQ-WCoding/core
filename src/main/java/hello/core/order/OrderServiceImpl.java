@@ -3,10 +3,11 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+// @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     /* 프로세스 -> 주문을 내리기 위해서는 해당 회원의 등급을 확인하고, 등급에 맞는 회원의 할인정책을 적용한 주문내역을 내린다 */
@@ -18,27 +19,25 @@ public class OrderServiceImpl implements OrderService {
     // DIP는 지켰다 -> 의존성 주입에 대한건 지켰음
     private DiscountPolicy discountPolicy;
 
-    public OrderServiceImpl() {
-
-    }
-
-    // Setter를 사용해 가변적인 주입도 가능하다.
-    // Spring bean에 등록되어 있지 않은 객체도 선택적으로 등록가능하다
-    @Autowired
-    public void setMemberRepository( MemberRepository memberRepository ) {
-        this.memberRepository = memberRepository;
-    }
-
-    @Autowired
-    public void setDiscountPolicy( DiscountPolicy discountPolicy ) {
-        this.discountPolicy = discountPolicy;
-    }
+    // public OrderServiceImpl() {
+    //
+    // }
+    //
+    // // Setter를 사용해 가변적인 주입도 가능하다.
+    // // Spring bean에 등록되어 있지 않은 객체도 선택적으로 등록가능하다
+    // @Autowired
+    // public void setMemberRepository( MemberRepository memberRepository ) {
+    //     this.memberRepository = memberRepository;
+    // }
+    //
+    // @Autowired
+    // public void setDiscountPolicy( DiscountPolicy discountPolicy ) {
+    //     this.discountPolicy = discountPolicy;
+    // }
 
     // 생성자가 하나일 때는 @Autowired를 생략해도 상관없다
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println( "memberRepository = " + memberRepository );
-        System.out.println( "discountPolicy = " + discountPolicy );
+    // @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier ( "mainDiscountPolicy" ) DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
