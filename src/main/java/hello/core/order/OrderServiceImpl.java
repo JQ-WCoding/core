@@ -1,5 +1,6 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDisocountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Component;
 public class OrderServiceImpl implements OrderService {
 
     /* 프로세스 -> 주문을 내리기 위해서는 해당 회원의 등급을 확인하고, 등급에 맞는 회원의 할인정책을 적용한 주문내역을 내린다 */
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     //    private final DiscountPolicy discountPolicy = new fixDiscountPolicy();
     // 비율할인 정책으로 변경되어 다른 구현 객체를 입력한다
     //    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
     // 인터페이스에만 의존하도록 변경 -> 구현체는 의존하지 않는다
     // DIP는 지켰다 -> 의존성 주입에 대한건 지켰음
-    private DiscountPolicy discountPolicy;
+    private final DiscountPolicy discountPolicy;
 
     // public OrderServiceImpl() {
     //
@@ -37,7 +38,12 @@ public class OrderServiceImpl implements OrderService {
 
     // 생성자가 하나일 때는 @Autowired를 생략해도 상관없다
     // @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier ( "mainDiscountPolicy" ) DiscountPolicy discountPolicy) {
+    // public OrderServiceImpl(MemberRepository memberRepository, @Qualifier ( "mainDiscountPolicy" ) DiscountPolicy discountPolicy) {
+    //     this.memberRepository = memberRepository;
+    //     this.discountPolicy = discountPolicy;
+    // }
+
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDisocountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
