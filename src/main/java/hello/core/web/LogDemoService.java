@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogDemoService {
 
+    // ObjectProvider를 사용하여 객체를 제공받아 사용하는 형식
     private final ObjectProvider<MyLogger> myLoggerProvider;
 
     public void logic(String testID) {
