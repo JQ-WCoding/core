@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 public class LogDemoService {
 
     // ObjectProvider를 사용하여 객체를 제공받아 사용하는 형식
-    private final ObjectProvider<MyLogger> myLoggerProvider;
+    // private final ObjectProvider<MyLogger> myLoggerProvider;
+    private final MyLogger myLogger;
 
     public void logic(String testID) {
-        MyLogger myLogger = myLoggerProvider.getObject();
+        // MyLogger myLogger = myLoggerProvider.getObject();
         myLogger.log( "service ID : " + testID );
     }
 }

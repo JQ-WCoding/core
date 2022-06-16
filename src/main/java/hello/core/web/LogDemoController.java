@@ -2,7 +2,6 @@ package hello.core.web;
 
 import hello.core.common.MyLogger;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +15,8 @@ public class LogDemoController {
     private final LogDemoService logDemoService;
 
     // ObjectProvider를 사용하여 객체를 호출하는 시점에도 Bean 생성을 추적하고 지연할 수 있음
-    private final ObjectProvider<MyLogger> myLoggerProvider;
+    // private final ObjectProvider<MyLogger> myLoggerProvider;
+    private final MyLogger myLogger;
 
     @RequestMapping ( "log-demo" )
     @ResponseBody
@@ -24,7 +24,7 @@ public class LogDemoController {
         String requestUrl = request.getRequestURL()
                 .toString();
         // 현 타이밍에 getObject()를 호출하여 주입
-        MyLogger myLogger = myLoggerProvider.getObject();
+        // MyLogger myLogger = myLoggerProvider.getObject();
         myLogger.setRequestURL( requestUrl );
 
         myLogger.log( "Controller Test" );
